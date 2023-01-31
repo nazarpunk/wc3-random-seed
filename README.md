@@ -1,0 +1,1 @@
+# wc3-random-seed
