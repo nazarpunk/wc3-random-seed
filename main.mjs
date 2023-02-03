@@ -27,15 +27,6 @@ const addDataset = (label, data) => {
 const count = 1e6;
 const index = rnd => Math.floor(rnd * 11);
 
-// js: Math.random()
-{
-	const d = {...data};
-	for (let i = 0; i < count; i++) {
-		d[index(Math.random())]++;
-	}
-	addDataset('js:Math.random', d);
-}
-
 const seed = Date.now();
 
 {
