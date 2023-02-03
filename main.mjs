@@ -1,6 +1,8 @@
 import {RandomSeed} from './RandomSeed.mjs';
 
-const ctx = document.querySelector('canvas').getContext('2d');
+const canvas = document.createElement('canvas');
+document.body.appendChild(canvas);
+const ctx = canvas.getContext('2d');
 
 const labels = [];
 const data = {};
@@ -14,12 +16,10 @@ const addDataset = (label, data) => {
 	const dataset = {
 		label: label,
 		data: [],
-		fill: {
-			//target: 'origin',
-		}
+		tension: 0.4,
 	};
 	for (const v of Object.values(data)) {
-		dataset.data.push(v);
+		dataset.data.push(v === 0 ? null : v);
 	}
 	datasets.push(dataset);
 };
@@ -36,42 +36,25 @@ const index = rnd => Math.floor(rnd * 11);
 	addDataset('js:Math.random', d);
 }
 
-addDataset('lua:math.random', {
-		0: 90775,
-		1: 90671,
-		2: 91446,
-		3: 90610,
-		4: 90975,
-		5: 90833,
-		6: 90557,
-		7: 90971,
-		8: 91205,
-		9: 91142,
-		10: 90816,
-	}
-);
-
 const seed = Date.now();
-// RandomSeed
+
 {
 	const d = {...data};
 	const rng = new RandomSeed(seed);
 	for (let i = 0; i < count; i++) {
-		d[index(rng.next())]++;
+		d[index(rng.uniform())]++;
 	}
 	addDataset(`RandomSeed(${seed})`, d);
 }
 
-
-// RandomSeed
 {
 	for (let scale = 2; scale <= 7; scale++) {
 		const d = {...data};
 		const rng = new RandomSeed(seed);
 		for (let i = 1; i <= count; i++) {
-			d[index(rng.nextGaussianScale(scale))]++;
+			d[index(rng.normal(scale))]++;
 		}
-		addDataset(`nextGaussianScale(${scale})`, d);
+		addDataset(`normal(${scale})`, d);
 	}
 }
 
@@ -105,7 +88,7 @@ new Chart(ctx, {
 		responsive: true,
 		elements: {
 			point: {
-				radius: 2,
+				radius: 4,
 			},
 		},
 		scales: {
