@@ -1,16 +1,23 @@
 export class RandomSeed {
 	constructor(seed) {
-		this.m_w = seed;
-		this.m_z = 987654321;
+		// 1103515245, 12345, 0x10000 from Ansi C
+		// 1664525, 1013904223, 0x10000 from Numerical Recipes
+		// 214013, 2531011, 0x10000 from MVC
+		this.a = 1103515245;
+		this.c = 12345;
+		this.m = 0x10000;
+		this.ic = this.c;
+		this.x = seed;
 	}
 
 	/**
 	 * @return {number}
 	 */
 	uniform() {
-		this.m_z = 36969 * (this.m_z & 65535) + (this.m_z >> 16) & 4294967295;
-		this.m_w = 18000 * (this.m_w & 65535) + (this.m_w >> 16) & 4294967295;
-		return ((this.m_z << 16) + this.m_w & 4294967295) / 4294967296 + .5;
+		const t = this.a * this.x + this.c;
+		this.x = t % this.m;
+		this.c = Math.floor(t / this.m);
+		return this.x / 0x10000;
 	}
 
 	/**

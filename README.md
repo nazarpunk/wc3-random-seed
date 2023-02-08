@@ -1,1 +1,1 @@
-# wc3-random-seed
+https://nazarpunk.github.io/wc3-random-seed/

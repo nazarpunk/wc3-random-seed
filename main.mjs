@@ -49,7 +49,6 @@ const seed = Date.now();
 	}
 }
 
-
 const plugin = {
 	id: 'customCanvasBackgroundColor',
 	beforeDraw: chart => {
@@ -102,5 +101,3 @@ new Chart(ctx, {
 		}
 	},
 });
-
-export {}
