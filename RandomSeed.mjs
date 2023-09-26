@@ -6,7 +6,6 @@ export class RandomSeed {
 		this.a = 1103515245;
 		this.c = 12345;
 		this.m = 0x10000;
-		this.ic = this.c;
 		this.x = seed;
 	}
 
